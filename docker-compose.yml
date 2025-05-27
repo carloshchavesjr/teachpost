@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
     container_name: nest_app
     ports:
-      - "3000:3000"
+      - "4000:4000" 
     volumes:
       - ./teachpost-backend:/app
       - backend_node_modules:/app/node_modules
@@ -44,14 +44,14 @@ services:
       dockerfile: Dockerfile
     container_name: react_app
     ports:
-      - "3001:3000"
+      - "3000:3000"  
     volumes:
       - ./teachpost-frontend:/app
       - frontend_node_modules:/app/node_modules
     env_file:
       - .env  
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:3000  
+      - NEXT_PUBLIC_API_URL=http://backend:4000 
     depends_on:
       - backend
     networks:

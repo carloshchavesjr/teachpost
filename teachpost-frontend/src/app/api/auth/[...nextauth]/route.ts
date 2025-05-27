@@ -14,7 +14,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Email e senha são obrigatórios.');
         }
 
-        const res = await fetch('http://localhost:3000/auth/login', {
+        const res = await fetch('http://localhost:4000/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

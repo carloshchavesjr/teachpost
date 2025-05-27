@@ -17,9 +17,9 @@ docker-compose up --build
 
 ### ✅ Passo 3: Acessar os Serviços 
 
-Frontend → http://localhost:3001
+Frontend → http://localhost:3000
 
-Backend → http://localhost:3000
+Backend → http://localhost:4000
 
 Database → localhost:5432
 
