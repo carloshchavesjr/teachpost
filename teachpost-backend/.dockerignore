@@ -1,0 +1,30 @@
+# Node.js
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Output folders
+dist
+.next
+out
+build
+
+# Configs
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.development
+.env.production
+.env.test

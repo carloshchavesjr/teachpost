@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    env_file:
+      - .env  
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  backend:
+    build:
+      context: ./teachpost-backend
+      dockerfile: Dockerfile
+    container_name: nest_app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./teachpost-backend:/app
+      - /app/node_modules
+    env_file:
+      - .env  # Carrega DB_HOST, DB_PORT, etc.
+    environment:
+      - DB_HOST=db  # Sobrescreve para Docker (opcional)
+      - NODE_ENV=development
+    depends_on:
+      - db
+    networks:
+      - app_network
+    command: npm run start:dev
+
+  frontend:
+    build:
+      context: ./teachpost-frontend
+      dockerfile: Dockerfile
+    container_name: react_app
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./teachpost-frontend:/app
+      - /app/node_modules
+    env_file:
+      - .env  
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3000  
+    depends_on:
+      - backend
+    networks:
+      - app_network
+    command: npm run dev
+
+volumes:
+  postgres_data:
+
+networks:
+  app_network:
+    driver: bridge
