@@ -26,11 +26,11 @@ services:
       - "3000:3000"
     volumes:
       - ./teachpost-backend:/app
-      - /app/node_modules
+      - backend_node_modules:/app/node_modules
     env_file:
-      - .env  # Carrega DB_HOST, DB_PORT, etc.
+      - .env  
     environment:
-      - DB_HOST=db  # Sobrescreve para Docker (opcional)
+      - DB_HOST=db
       - NODE_ENV=development
     depends_on:
       - db
@@ -47,7 +47,7 @@ services:
       - "3001:3000"
     volumes:
       - ./teachpost-frontend:/app
-      - /app/node_modules
+      - frontend_node_modules:/app/node_modules
     env_file:
       - .env  
     environment:
@@ -60,6 +60,8 @@ services:
 
 volumes:
   postgres_data:
+  backend_node_modules:
+  frontend_node_modules:
 
 networks:
   app_network:

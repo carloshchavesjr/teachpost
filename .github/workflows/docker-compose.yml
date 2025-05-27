@@ -41,17 +41,19 @@ jobs:
 
       - name: Build and run containers with Docker Compose
         run: |
-          docker-compose up -d --build
-          
+          docker compose up -d --build
+
       - name: Wait for backend to be healthy
         run: |
-          echo "Waiting for backend to be ready..."
-          sleep 20
+          until curl -s http://localhost:3000/health; do
+            echo "Waiting for backend..."
+            sleep 5
+          done
 
       - name: Run backend tests
         run: |
-          docker-compose exec -T backend npm run test || echo "No tests configured"
+          docker compose exec -T backend npm run test || echo "No tests configured"
 
       - name: Tear down containers
         run: |
-          docker-compose down
+          docker compose down -v --remove-orphans
